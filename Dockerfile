@@ -7,8 +7,9 @@ WORKDIR /build
 RUN apk add --no-cache git python3 python3-dev py3-pip py3-wheel build-base gcc libffi-dev openssl-dev musl-dev cargo
 
 # Fetch AppDaemon
-ARG APPDAEMON_TAG=4.2.1
-RUN git clone --depth 1 --branch $APPDAEMON_TAG https://github.com/AppDaemon/appdaemon.git
+ARG APPDAEMON_TAG
+RUN : "${APPDAEMON_TAG:?APPDAEMON_TAG needs to be set and non-empty.}" \
+    && git clone --depth 1 --branch $APPDAEMON_TAG https://github.com/AppDaemon/appdaemon.git
 RUN pip install -r appdaemon/requirements.txt
 
 FROM ${BASE}
