@@ -29,7 +29,7 @@ RUN apk add --no-cache curl python3 py3-pip tzdata
 # Steal compiled deps from builder image
 COPY --from=builder /usr/lib/python3.9/site-packages/ /usr/lib/python3.9/site-packages/
 
-RUN apk add --no-cache tzdata
+RUN apk add --no-cache tzdata py3-scikit-learn
 
 # Copy over necessary sources
 COPY --from=builder /build/appdaemon/appdaemon/ ./appdaemon/
