@@ -28,13 +28,11 @@ RUN apk add --no-cache curl python3 py3-pip tzdata
 # Steal compiled deps from builder image
 COPY --from=builder /usr/lib/python3.9/site-packages/ /usr/lib/python3.9/site-packages/
 
-# Copy over necessary sources
-COPY --from=builder /build/appdaemon/dockerStart.sh /build/appdaemon/requirements.txt /build/appdaemon/README.md /build/appdaemon/setup.py ./
-COPY --from=builder /build/appdaemon/appdaemon/ ./appdaemon/
+RUN apk add --no-cache tzdata
 
-# Run instal
-RUN pip install .
+# Copy over necessary sources
+COPY --from=builder /build/appdaemon/appdaemon/ ./appdaemon/
+COPY dockerStart.sh .
 
 # Start script
-RUN chmod +x /usr/src/app/dockerStart.sh
 ENTRYPOINT ["./dockerStart.sh"]
